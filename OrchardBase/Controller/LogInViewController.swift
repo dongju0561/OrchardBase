@@ -20,6 +20,8 @@ class LogInViewController: UIViewController {
         self.view.addSubview(toMainButton)
         self.view.addSubview(PWLbl)
         let screanSize = UIScreen.main.bounds
+        let vc = UIHostingController(rootView: MainView())
+        self.navigationController?.pushViewController(vc, animated: true)
         
         //configuring common
         IDLbl.translatesAutoresizingMaskIntoConstraints = false
