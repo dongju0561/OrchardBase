@@ -7,62 +7,79 @@
 
 import UIKit
 import SwiftUI
+import FirebaseDatabase
 
 class LogInViewController: UIViewController {
 
     let toMainButton = UIButton()
-    let IDLbl = UILabel()
-    let PWLbl = UILabel()
+    let IDTextFiled = UITextField()
+    let PWTextFiled = UITextField()
+    let ref = Database.database().reference()
+    let vc = UIHostingController(rootView: MainView())
+    var User: String = ""
+    var Password: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(IDLbl)
+        self.view.addSubview(IDTextFiled)
         self.view.addSubview(toMainButton)
-        self.view.addSubview(PWLbl)
+        self.view.addSubview(PWTextFiled)
         let screanSize = UIScreen.main.bounds
-        let vc = UIHostingController(rootView: MainView())
-        self.navigationController?.pushViewController(vc, animated: true)
+        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         
-        //configuring common
-        IDLbl.translatesAutoresizingMaskIntoConstraints = false
-        PWLbl.translatesAutoresizingMaskIntoConstraints = false
-        toMainButton.translatesAutoresizingMaskIntoConstraints = false
-        
+        updateAuth()
+
         //configuring IDLbl
-        IDLbl.text = "ID"
-        IDLbl.backgroundColor = .orange
-        IDLbl.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
-        IDLbl.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
-        IDLbl.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        IDLbl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        IDTextFiled.translatesAutoresizingMaskIntoConstraints = false
+        IDTextFiled.autocorrectionType = UITextAutocorrectionType.no
+        IDTextFiled.autocapitalizationType = UITextAutocapitalizationType.none
+        IDTextFiled.placeholder = "Insert your ID"
+        IDTextFiled.backgroundColor = .orange
+        IDTextFiled.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
+        IDTextFiled.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
+        IDTextFiled.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        IDTextFiled.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         //configuring PWLbl
-        PWLbl.text = "Password"
-        PWLbl.backgroundColor = .orange
-        PWLbl.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
-        PWLbl.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
-        PWLbl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        PWLbl.topAnchor.constraint(equalTo: self.IDLbl.topAnchor, constant: 100).isActive = true
+        PWTextFiled.translatesAutoresizingMaskIntoConstraints = false
+        PWTextFiled.autocorrectionType = UITextAutocorrectionType.no
+        PWTextFiled.autocapitalizationType = UITextAutocapitalizationType.none
+        PWTextFiled.placeholder = "Insert your password"
+        PWTextFiled.backgroundColor = .orange
+        PWTextFiled.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
+        PWTextFiled.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
+        PWTextFiled.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        PWTextFiled.topAnchor.constraint(equalTo: self.IDTextFiled.topAnchor, constant: 100).isActive = true
         
         //configuring button
+        toMainButton.translatesAutoresizingMaskIntoConstraints = false
         toMainButton.setTitle("로그인", for: .normal)
         toMainButton.setTitleColor(.black, for: .normal)
         toMainButton.backgroundColor = .orange
         toMainButton.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
         toMainButton.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
-        toMainButton.topAnchor.constraint(equalTo: self.PWLbl.topAnchor, constant: 100).isActive = true
+        toMainButton.topAnchor.constraint(equalTo: self.PWTextFiled.topAnchor, constant: 100).isActive = true
         toMainButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        toMainButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     }
     
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func buttonAction(sender: UIButton){
+        if(User == IDTextFiled.text && Password == PWTextFiled.text){
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        //로그인에 실패했을때 실패 에니메이션 추가
+        IDTextFiled.text = ""
+        PWTextFiled.text = ""
     }
-    */
-
+    
+    func updateAuth() {
+        ref.child("Auth/user").observeSingleEvent(of: .value, with: { [self] snapshot in
+            let user = snapshot.value as? String
+            User = user ?? ""
+        })
+        ref.child("Auth/Password").observeSingleEvent(of: .value, with: { [self] snapshot in
+            let password = snapshot.value as? String
+            Password = password ?? ""
+        })
+    }
 }

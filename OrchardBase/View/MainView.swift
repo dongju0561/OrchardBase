@@ -13,6 +13,7 @@ struct MainView: View {
     var body: some View{
         let screanSize = UIScreen.main.bounds
         let ref = Database.database().reference()
+        
         VStack{
             Rectangle()
                 .frame(width: 200, height: 100)
@@ -49,40 +50,36 @@ struct MainView: View {
                         .fill(btnBackgoundColor(for: lightStates[2]))
                         .frame(width: (screanSize.width - 20) / 2, height: 150)
                         .cornerRadius(20)
-
                 }
                 Button{
                     print(!lightStates[0])
                 } label: {
                     Rectangle()
-                        .fill(.red)
+                        .fill(.pink.opacity(0.7))
                         .frame(width: (screanSize.width - 20) / 2, height: 150)
                         .cornerRadius(20)
                 }
             }
             Spacer()
                 .frame(width: 1, height: 100)
-            Button{
-                for databaseIndex in 1...3{
-                    ref.child("light/light\(databaseIndex)").observeSingleEvent(of: .value, with: { [self] snapshot in
-                        let state = snapshot.value as? Bool
-                        lightStates[databaseIndex - 1] = state ?? true
-                        print(lightStates)
-                    })
-                }
-            } label: {
-                Text("refresh")
-            }
             
-        }
+        }.onAppear(perform: {
+            for databaseIndex in 1...3{
+                ref.child("light/light\(databaseIndex)").observeSingleEvent(of: .value, with: { [self] snapshot in
+                    let state = snapshot.value as? Bool
+                    lightStates[databaseIndex - 1] = state ?? true
+                    print(lightStates)
+                })
+            }
+        })
     }
     
     private func btnBackgoundColor(for state : Bool) -> Color{
         switch state{
-        case true: return Color.yellow
-        case false: return Color.gray
+        case true: return Color.yellow.opacity(0.7)
+        case false: return Color.gray.opacity(0.7)
         }
-    }
+    }   
 }
 
 struct MyPreviewProvider_Previews: PreviewProvider {
