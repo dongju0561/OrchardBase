@@ -25,16 +25,19 @@ class LogInViewController: UIViewController {
         self.view.addSubview(toMainButton)
         self.view.addSubview(PWTextFiled)
         let screanSize = UIScreen.main.bounds
-        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        //let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         
         updateAuth()
-
         //configuring IDLbl
         IDTextFiled.translatesAutoresizingMaskIntoConstraints = false
         IDTextFiled.autocorrectionType = UITextAutocorrectionType.no
         IDTextFiled.autocapitalizationType = UITextAutocapitalizationType.none
-        IDTextFiled.placeholder = "Insert your ID"
-        IDTextFiled.backgroundColor = .orange
+        //IDTextFiled.placeholder = "Insert your ID"
+        IDTextFiled.text = "dongju"
+        IDTextFiled.addLeftPadding()
+        IDTextFiled.layer.cornerRadius = 30
+        IDTextFiled.backgroundColor = #colorLiteral(red: 0.8230885863, green: 0.8433898687, blue: 0.6238721013, alpha: 1)
+        IDTextFiled.textColor = #colorLiteral(red: 0.2823529412, green: 0.2196078431, blue: 0.2196078431, alpha: 1)
         IDTextFiled.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
         IDTextFiled.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
         IDTextFiled.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
@@ -44,8 +47,12 @@ class LogInViewController: UIViewController {
         PWTextFiled.translatesAutoresizingMaskIntoConstraints = false
         PWTextFiled.autocorrectionType = UITextAutocorrectionType.no
         PWTextFiled.autocapitalizationType = UITextAutocapitalizationType.none
-        PWTextFiled.placeholder = "Insert your password"
-        PWTextFiled.backgroundColor = .orange
+        //PWTextFiled.placeholder = "Insert your password"
+        PWTextFiled.addLeftPadding()
+        PWTextFiled.text = "qwerasdf"
+        PWTextFiled.layer.cornerRadius = 30
+        PWTextFiled.backgroundColor = #colorLiteral(red: 0.8230885863, green: 0.8433898687, blue: 0.6238721013, alpha: 1)
+        PWTextFiled.textColor = #colorLiteral(red: 0.5647058824, green: 0.7176470588, blue: 0.4901960784, alpha: 1)
         PWTextFiled.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
         PWTextFiled.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
         PWTextFiled.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
@@ -55,7 +62,10 @@ class LogInViewController: UIViewController {
         toMainButton.translatesAutoresizingMaskIntoConstraints = false
         toMainButton.setTitle("로그인", for: .normal)
         toMainButton.setTitleColor(.black, for: .normal)
-        toMainButton.backgroundColor = .orange
+        toMainButton.layer.cornerRadius = 30
+        toMainButton.backgroundColor = #colorLiteral(red: 0.8230885863, green: 0.8433898687, blue: 0.6238721013, alpha: 1)
+        toMainButton.setTitleColor(#colorLiteral(red: 0.2823529412, green: 0.2196078431, blue: 0.2196078431, alpha: 1), for: .normal) 
+        
         toMainButton.widthAnchor.constraint(equalToConstant: screanSize.width - 70).isActive = true
         toMainButton.heightAnchor.constraint(equalToConstant: screanSize.height / 15).isActive = true
         toMainButton.topAnchor.constraint(equalTo: self.PWTextFiled.topAnchor, constant: 100).isActive = true
@@ -83,3 +93,12 @@ class LogInViewController: UIViewController {
         })
     }
 }
+
+extension UITextField{
+    func addLeftPadding() {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        self.leftView = paddingView
+        self.leftViewMode = ViewMode.always
+    }
+}
+
