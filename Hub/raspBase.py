@@ -23,7 +23,8 @@ oldAirPower = "False"
 print("Start program")
 
 # 데이터 초기화 함수
-def getCurrentState():
+def initState(): #edit: initState
+	print("getCurrentState")
 	global oldLight1
 	global oldLight2
 	global oldLight3 
@@ -36,14 +37,14 @@ def getCurrentState():
 	db.child("Airconditioner").child("upTemp").set("False") 
 
 # 전등 상태 변화 확인 함수
-def checkChangingState(control, component, oldData):
+def changeState(control, component, oldData):
+	print("changeState")		
 	if control == "light":
 		newData = db.child("light").child(component).get().val()
 
 		if newData != oldData:
 			print(component+" is changed!")
 			return newData
-
 		else: 						# 위에 조건을 만족 못하고 따로 return을 안시켜주면 None값을 return함...
 			return oldData 				# 위의 조건을 만족 못할 시
 
@@ -51,12 +52,9 @@ def checkChangingState(control, component, oldData):
 		newData = db.child("Airconditioner").child(component).get().val()
 
 		if newData != oldData:
-			operateAir(component)
-			print(newData)
-			print(oldData)	
 			print(component+" is changed!")
+			operateAir(component)
 			return oldData
-
 		else:
 			return oldData
 
@@ -66,14 +64,50 @@ def operateAir(AirComponent):
 
 def operateBLU():
 	print("send data")
-	
+
+def checkState():
+	print("checkState")
+	global oldLight1	
+	global oldLight2
+	global oldLight3
+	global oldAirDownTemp
+	global oldAirUpTemp
+	global oldAirPower
+
+	state = db.child("state").get().val()
+	print(state)
+	if state == "true":
+		oldLight1 = changeState("light", "light1", oldLight1)
+		oldLight2 = changeState("light","light2", oldLight2)
+		oldLight3 = changeState("light","light3", oldLight3)
+		oldAirDownTemp = changeState("airconditioner", "downTemp", oldAirDownTemp)
+		oldAirUpTemp = changeState("airconditioner","upTemp", oldAirUpTemp)
+		oldAirPower = changeState("airconditioner","power", oldAirPower)
+		db.child("state").set("False")
 # main
-getCurrentState()
+initState()
 
 while True:
-	oldLight1 = checkChangingState("light", "light1", oldLight1)
-	oldLight2 = checkChangingState("light","light2", oldLight2)
-	oldLight3 = checkChangingState("light","light3", oldLight3)
-	oldAirDownTemp = checkChangingState("airconditioner", "downTemp", oldAirDownTemp)
-	oldAirUpTemp = checkChangingState("airconditioner","upTemp", oldAirUpTemp)
-	oldAirPower = checkChangingState("airconditioner","power", oldAirPower)
+	checkState()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
