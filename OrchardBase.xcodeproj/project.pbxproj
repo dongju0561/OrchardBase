@@ -17,7 +17,7 @@
 		1BB9499F28D34B5F002715A6 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 1BB9499E28D34B5F002715A6 /* FirebaseAuth */; };
 		1BB949A128D34B5F002715A6 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 1BB949A028D34B5F002715A6 /* FirebaseDatabase */; };
 		1BB949A328D34B5F002715A6 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 1BB949A228D34B5F002715A6 /* FirebaseFirestore */; };
-		1BB949A528D363F5002715A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BB949A428D363F5002715A6 /* GoogleService-Info.plist */; };
+		1BFA09B128E4566D00BAF2C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BFA09B028E4566D00BAF2C5 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +30,7 @@
 		1BB9499028D2E0A9002715A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BB9499328D2E0A9002715A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BB9499528D2E0A9002715A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BB949A428D363F5002715A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1BFA09B028E4566D00BAF2C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +98,7 @@
 				1BB9499028D2E0A9002715A6 /* Assets.xcassets */,
 				1BB9499228D2E0A9002715A6 /* LaunchScreen.storyboard */,
 				1BB9499528D2E0A9002715A6 /* Info.plist */,
-				1BB949A428D363F5002715A6 /* GoogleService-Info.plist */,
+				1BFA09B028E4566D00BAF2C5 /* GoogleService-Info.plist */,
 			);
 			path = OrchardBase;
 			sourceTree = "<group>";
@@ -170,7 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BB9499428D2E0A9002715A6 /* LaunchScreen.storyboard in Resources */,
-				1BB949A528D363F5002715A6 /* GoogleService-Info.plist in Resources */,
+				1BFA09B128E4566D00BAF2C5 /* GoogleService-Info.plist in Resources */,
 				1BB9499128D2E0A9002715A6 /* Assets.xcassets in Resources */,
 				1BB9498F28D2E0A7002715A6 /* Main.storyboard in Resources */,
 			);
