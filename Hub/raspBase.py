@@ -19,11 +19,10 @@ oldLight3 = ""
 oldAirPower = ""
 oldDTemp = "23" # desiredTemp
 
-print("Start program")
+print("Start program...")
 
 # 데이터 초기화 함수
 def initState(): #edit: initState
-	print("getCurrentState")
 	global oldLight1
 	global oldLight2
 	global oldLight3 
@@ -71,7 +70,7 @@ def changeState(control, component, oldData):
 			return oldData
 
 def operateBLU(value):
-	print(value + "send data")
+	print(value)
 
 def checkState():
 	global oldLight1	
@@ -83,20 +82,19 @@ def checkState():
 	global oldDTemp
 
 	state = db.child("state").get().val() # state변수가 바뀌었을때 일괄적으로 component 전체 확인
-
-	if state == "true":
+	if bool(state) == True:
 		oldLight1 = changeState("light", "light1", oldLight1)
 		oldLight2 = changeState("light","light2", oldLight2)
 		oldLight3 = changeState("light","light3", oldLight3)
 		oldDTemp = changeState("Airconditioner","dTemp", oldDTemp)
 		oldAirPower = changeState("Airconditioner","power", oldAirPower)
-		db.child("state").set("False")
+		db.child("state").set(False)
 # main
 initState()
 
 while True:
 	checkState()
-
+	time.sleep(0.1)
 
 
 
