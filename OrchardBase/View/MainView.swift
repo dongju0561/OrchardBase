@@ -108,8 +108,7 @@ struct ControlView: View{
                     }
                     Button{
                         self.isModalSheetShown = true
-                    }
-                    label: {
+                    }label: {
                         ZStack{
                             Rectangle()
                                 .fill(Color.bearBrown)
@@ -129,6 +128,7 @@ struct ControlView: View{
                     .frame(width: 1, height: 100)
                 
             }.onAppear(perform: {
+                print("it workedx")
                 for databaseIndex in 1...3{
                     ref.child("light/light\(databaseIndex)").observeSingleEvent(of: .value, with: { [self] snapshot in
                         let state = snapshot.value as? Bool
@@ -148,7 +148,10 @@ struct ControlView: View{
 
 struct AirconditionView: View{
     @Environment(\.dismiss) var dismiss
-    @State var toggleState = false
+    let ref = Database.database().reference()
+    
+    @State var dTemp: String = ""
+    @State var temp: String = "23"
     var body: some View{
         NavigationView {
             ZStack{
@@ -156,9 +159,65 @@ struct AirconditionView: View{
                     .ignoresSafeArea()
                     
                 VStack {
+                    Spacer()
+                        .frame(height: 1)
+                    Text("에어컨 리모콘")
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 100)
+                        .font(.system(size: 30))
+                        .fontWeight(.bold)
+                        .foregroundColor(.brighGreen)
+                        .background(Color.bearBrown)
+                    Spacer()
+                        .frame(height: 30)
+                    VStack{
+                        Text("설정 온도")
+                        HStack{
+                            Text("\(temp) ℃")
+                                .font(.system(size: 50))
+                        }
+                    }
+                    HStack{
+                        Text("희망 온도:")
+                            .font(.system(size: 25))
+                            .foregroundColor(.brighGreen)
+                            .fontWeight(.heavy)
+                        
+                        TextField("16℃ ~ 32℃", text: $dTemp)
+                            .textFieldStyle(.plain)
+                            .font(.system(size: 14))
+                            .padding(.leading,10)
+                            .frame(width: 100,height: 40, alignment: .trailing)
+                            .background(Color.brighGreen)
+                            .cornerRadius(15)
+                            .keyboardType(.phonePad)
+                        
+                        Button {
+                            if(16 <=  Int(dTemp) ?? 1 && Int(dTemp) ?? 1 <= 32){
+                                temp = dTemp
+                                UIApplication.shared.endEditing()
+                                ref.child("Airconditioner/dTemp").setValue("\(dTemp)")
+                                dTemp = ""
+                            }
+                            else{
+                                dTemp = ""
+                                UIApplication.shared.endEditing()
+                            }
+                        }label: {
+                            Image(systemName: "paperplane.circle.fill")
+                                .foregroundColor(.brighGreen)
+                                .font(.system(size: 30))
+                                .padding(.leading,10)
+                        }
+                    }
+                    .frame(width: 300, height: 55, alignment: .center)
+                    .background(Color.bearBrown)
+                    .cornerRadius(20)
+                    
+                    Spacer()
                     Button{
-                        toggleState.toggle()
-                        changeStateOfAircon(state: toggleState)
+                        //toggleState.toggle()
+                        changeStateOfAircon()
                     }label: {
                         ZStack{
                             Circle()
@@ -175,21 +234,14 @@ struct AirconditionView: View{
                 .navigationBarItems(trailing: Button("Done",action: {
                     dismiss()
                 }))
-            }.onAppear(
-                
-            )
+            }
         }
     }
 }
 
-func changeStateOfAircon(state: Bool) {
+func changeStateOfAircon() {
     let ref = Database.database().reference()
-    if(state){
-        ref.child("Airconditioner/power").setValue("true")
-    }
-    else{
-        ref.child("Airconditioner/power").setValue("false")
-    }
+    ref.child("Airconditioner/power").setValue("true")
 }
 
 extension Color{
@@ -212,8 +264,14 @@ extension Color{
     static let bearBrown = Color(hex: "#483838")
 }
 
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
 struct MyPreviewProvider_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        AirconditionView()
     }
 }
