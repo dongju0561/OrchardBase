@@ -48,6 +48,7 @@ struct ControlView: View{
                 HStack{
                     Button{
                         ref.child("light/light1").setValue(!lightStates[0])
+                        changeState()
                         lightStates[0] = !lightStates[0]
                     } label: {
                         ZStack{
@@ -68,6 +69,7 @@ struct ControlView: View{
                     
                     Button{
                         ref.child("light/light2").setValue(!lightStates[1])
+                        changeState()
                         lightStates[1] = !lightStates[1]
                     } label: {
                         ZStack{
@@ -89,6 +91,7 @@ struct ControlView: View{
                 HStack{
                     Button{
                         ref.child("light/light3").setValue(!lightStates[2])
+                        changeState()
                         lightStates[2] = !lightStates[2]
                     } label: {
                         ZStack{
@@ -199,8 +202,8 @@ struct AirconditionView: View{
                                 temp = dTemp
                                 UIApplication.shared.endEditing()
                                 ref.child("Airconditioner/dTemp").setValue("\(dTemp)")
+                                changeState()
                                 dTemp = ""
-                                ref.child("state").setValue(true)
                             }
                             else{
                                 dTemp = ""
@@ -224,6 +227,7 @@ struct AirconditionView: View{
                                 if(Int(temp)! < 32){
                                     temp = String((Int(temp)! + 1))
                                     ref.child("Airconditioner/dTemp").setValue("\(temp)")
+                                    changeState()
                                 }
                             }label: {
                                 ZStack{
@@ -242,6 +246,7 @@ struct AirconditionView: View{
                                 if(Int(temp)! > 16){
                                     temp = String((Int(temp)! - 1))
                                     ref.child("Airconditioner/dTemp").setValue("\(temp)")
+                                    changeState()
                                 }
                             }label: {
                                 ZStack{
@@ -288,7 +293,7 @@ struct AirconditionView: View{
                     }
                     Spacer()
                     Button{
-                        power = changeStateOfAircon(power: power)
+                        power = changePower(power: power)
                     }label: {
                         ZStack{
                             Circle()
@@ -309,10 +314,15 @@ struct AirconditionView: View{
         }
     }
 }
+func changeState(){
+    let ref = Database.database().reference()
+    ref.child("state").setValue(true)
+}
 
-func changeStateOfAircon(power: Bool) -> Bool {
+func changePower(power: Bool) -> Bool {
     let ref = Database.database().reference()
     ref.child("Airconditioner/power").setValue(!power)
+    changeState()
     return !power
 }
 
