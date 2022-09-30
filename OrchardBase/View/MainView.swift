@@ -148,6 +148,7 @@ struct ControlView: View{
 
 struct AirconditionView: View{
     @Environment(\.dismiss) var dismiss
+    @State var power: Bool = false
     let ref = Database.database().reference()
     
     @State var dTemp: String = ""
@@ -175,6 +176,7 @@ struct AirconditionView: View{
                         HStack{
                             Text("\(temp) ℃")
                                 .font(.system(size: 50))
+                                .fontWeight(.heavy)
                         }
                     }
                     HStack{
@@ -193,11 +195,12 @@ struct AirconditionView: View{
                             .keyboardType(.phonePad)
                         
                         Button {
-                            if(16 <=  Int(dTemp) ?? 1 && Int(dTemp) ?? 1 <= 32){
+                            if(16 <=  Int(dTemp)! && Int(dTemp)! <= 32){
                                 temp = dTemp
                                 UIApplication.shared.endEditing()
                                 ref.child("Airconditioner/dTemp").setValue("\(dTemp)")
                                 dTemp = ""
+                                ref.child("state").setValue(true)
                             }
                             else{
                                 dTemp = ""
@@ -215,14 +218,82 @@ struct AirconditionView: View{
                     .cornerRadius(20)
                     
                     Spacer()
+                    ZStack{
+                        VStack{
+                            Button{
+                                if(Int(temp)! < 32){
+                                    temp = String((Int(temp)! + 1))
+                                    ref.child("Airconditioner/dTemp").setValue("\(temp)")
+                                }
+                            }label: {
+                                ZStack{
+                                    Circle()
+                                        .fill(Color.bearBrown)
+                                        .frame(width: 80)
+                                    Image(systemName: "chevron.up")
+                                        .foregroundColor(.brighGreen)
+                                        .font(.system(size: 30))
+                                        .fontWeight(.heavy)
+                                }
+                            }
+                            Spacer()
+                                .frame(height: 60)
+                            Button{
+                                if(Int(temp)! > 16){
+                                    temp = String((Int(temp)! - 1))
+                                    ref.child("Airconditioner/dTemp").setValue("\(temp)")
+                                }
+                            }label: {
+                                ZStack{
+                                    Circle()
+                                        .fill(Color.bearBrown)
+                                        .frame(width: 80)
+                                    Image(systemName: "chevron.down")
+                                        .foregroundColor(.brighGreen)
+                                        .font(.system(size: 30))
+                                        .fontWeight(.heavy)
+                                }
+                            }
+                        }
+                        HStack{
+                            Button{
+                                
+                            }label: {
+                                ZStack{
+                                    Circle()
+                                        .fill(Color.bearBrown)
+                                        .frame(width: 80)
+                                    Image(systemName: "m.circle")
+                                        .foregroundColor(.brighGreen)
+                                        .font(.system(size: 30))
+                                        .fontWeight(.heavy)
+                                }
+                            }
+                            Spacer()
+                                .frame(width: 60 )
+                            Button{
+                                
+                            }label: {
+                                ZStack{
+                                    Circle()
+                                        .fill(Color.bearBrown)
+                                        .frame(width: 80)
+                                    Image(systemName: "wind")
+                                        .foregroundColor(.brighGreen)
+                                        .font(.system(size: 30))
+                                        .fontWeight(.heavy)
+                                }
+                            }
+                        }
+                    }
+                    Spacer()
                     Button{
-                        //toggleState.toggle()
-                        changeStateOfAircon()
+                        power = changeStateOfAircon(power: power)
                     }label: {
                         ZStack{
                             Circle()
                                 .fill(Color.brighGreen)
-                                .frame(width: 80, height: 80)
+                                .frame(width: 80)
                                 
                             Image(systemName: "power")
                                 .foregroundColor(.white)
@@ -239,9 +310,10 @@ struct AirconditionView: View{
     }
 }
 
-func changeStateOfAircon() {
+func changeStateOfAircon(power: Bool) -> Bool {
     let ref = Database.database().reference()
-    ref.child("Airconditioner/power").setValue("true")
+    ref.child("Airconditioner/power").setValue(!power)
+    return !power
 }
 
 extension Color{
