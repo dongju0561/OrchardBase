@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B1056AD290BE935008C4F13 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1056AC290BE935008C4F13 /* File.swift */; };
 		1B20FBDC28D4C27D00FDA771 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B20FBDB28D4C27D00FDA771 /* LogInViewController.swift */; };
 		1B20FBE528D5500600FDA771 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B20FBE428D5500600FDA771 /* MainView.swift */; };
 		1BB9498828D2E0A7002715A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB9498728D2E0A7002715A6 /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B1056AC290BE935008C4F13 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		1B20FBDB28D4C27D00FDA771 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		1B20FBE428D5500600FDA771 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		1BB9498428D2E0A7002715A6 /* OrchardBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrchardBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +52,7 @@
 		1B20FBDD28D4C43800FDA771 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1B1056AC290BE935008C4F13 /* File.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B1056AD290BE935008C4F13 /* File.swift in Sources */,
 				1B20FBE528D5500600FDA771 /* MainView.swift in Sources */,
 				1B20FBDC28D4C27D00FDA771 /* LogInViewController.swift in Sources */,
 				1BB9498828D2E0A7002715A6 /* AppDelegate.swift in Sources */,
