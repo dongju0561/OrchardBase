@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:748951137753:ios:9552c3a41a5bbadbe07dc8</string>
+	<string>1:748951137753:ios:912eb847f8bc92ffe07dc8</string>
+	<key>DATABASE_URL</key>
+	<string>https://orchardbase-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>
