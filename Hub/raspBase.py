@@ -1,5 +1,11 @@
 import pyrebase
 import time
+from bluetooth import *
+
+socket = BluetoothSocket( RFCOMM )
+socket.connect(("98:da:60:03:82:04",1))
+
+print("bluetooth connected!")
 
 config = {
 	"apiKey": "phMTjBWEtRt44mzu67HTUKju2pG7pjrhyY1HIJXG",
@@ -18,6 +24,7 @@ oldLight2 = ""
 oldLight3 = ""
 oldAirPower = ""
 oldDTemp = "23" # desiredTemp
+oldGas = "false"
 
 print("Start program...")
 
@@ -27,7 +34,8 @@ def initState(): #edit: initState
 	global oldLight2
 	global oldLight3 
 	global oldAirPower
-	global oldDTemp 
+	global oldDTemp
+ 
 	oldLight1 = db.child("light").child("light1").get().val() # get()메소드를 이용해서 조회
 	oldLight2 = db.child("light").child("light2").get().val()
 	oldLight3 = db.child("light").child("light3").get().val()
@@ -35,19 +43,19 @@ def initState(): #edit: initState
 	oldDTemp = db.child("Airconditioner").child("dTemp").get().val()
 
 # 전등 상태 변화 확인 함수
-def changeState(control, component, oldData):
+def checkState(control, component, oldData):
 	newData = db.child(control).child(component).get().val()
 	if control == "light":
 		if newData != oldData:
 			print(component+" is changed!")
-			operateBLU(newData)
+			operateBLU()
 			return newData
 		else: 						# 위에 조건을 만족 못하고 따로 return을 안시켜주면 None값을 return함...
 			return oldData 				# 위의 조건을 만족 못할 시
 	elif control == "Airconditioner" and component == "dTemp":
 		if newData != oldData:
 			print(component+" is changed!")
-			operateBLU(newData)
+			operateBLU()
 			return newData
 		else:
 			return oldData
@@ -56,7 +64,7 @@ def changeState(control, component, oldData):
 
 		if newData != oldData:
 			print(component+" is changed!")
-			operateBLU(newData)
+			operateBLU()
 			return oldData
 		else:
 			return oldData
@@ -64,13 +72,15 @@ def changeState(control, component, oldData):
 	elif control == "Airconditioner" and component == "power":
 		if newData != oldData:
 			print(component+" is changed!")
-			operateBLU(newData)
+			operateBLU()
 			return newData
 		else: 
 			return oldData
 
-def operateBLU(value):
-	print(value)
+def operateBLU():
+	msg = "connect"
+	socket.send(msg)
+
 
 def checkState():
 	global oldLight1	
@@ -83,36 +93,31 @@ def checkState():
 
 	state = db.child("state").get().val() # state변수가 바뀌었을때 일괄적으로 component 전체 확인
 	if bool(state) == True:
-		oldLight1 = changeState("light", "light1", oldLight1)
-		oldLight2 = changeState("light","light2", oldLight2)
-		oldLight3 = changeState("light","light3", oldLight3)
-		oldDTemp = changeState("Airconditioner","dTemp", oldDTemp)
-		oldAirPower = changeState("Airconditioner","power", oldAirPower)
+		oldLight1 = checkState("light", "light1", oldLight1)
+		oldLight2 = checkState("light","light2", oldLight2)
+		oldLight3 = checkState("light","light3", oldLight3)
+		oldDTemp = checkState("Airconditioner","dTemp", oldDTemp)
+		oldAirPower = checkState("Airconditioner","power", oldAirPower)
 		db.child("state").set(False)
+
+def checkGas():
+	data = socket.recv(1024)
+	data = data[1:4]
+	print(type(data)) #bytes 타입
+	if (data == bytes(d)):
+		print("change")
+		db.child("Sensor").child("Gas").set(True)
+		oldGas = "true"
+	elif(data == "n"):
+		db.child("Sensor").child("Gas").set(False)
+		oldGas = "false"
+
 # main
 initState()
 
 while True:
 	checkState()
 	time.sleep(0.1)
+	checkGas()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+socket.close
