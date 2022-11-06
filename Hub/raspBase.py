@@ -43,43 +43,32 @@ def initState(): #edit: initState
 	oldDTemp = db.child("Airconditioner").child("dTemp").get().val()
 
 # 전등 상태 변화 확인 함수
-def checkState(control, component, oldData):
+def checkComponentState(control, component, oldData):
 	newData = db.child(control).child(component).get().val()
 	if control == "light":
 		if newData != oldData:
 			print(component+" is changed!")
-			operateBLU()
 			return newData
 		else: 						# 위에 조건을 만족 못하고 따로 return을 안시켜주면 None값을 return함...
 			return oldData 				# 위의 조건을 만족 못할 시
 	elif control == "Airconditioner" and component == "dTemp":
 		if newData != oldData:
-			print(component+" is changed!")
-			operateBLU()
+			temp = (db.child(control).child(component).get().val())
+			operateBLU(temp)
+			print(" send! ")	
 			return newData
-		else:
-			return oldData
-
-	elif control == "Airconditioner" and component == "dTemp":
-
-		if newData != oldData:
-			print(component+" is changed!")
-			operateBLU()
-			return oldData
 		else:
 			return oldData
 
 	elif control == "Airconditioner" and component == "power":
 		if newData != oldData:
 			print(component+" is changed!")
-			operateBLU()
 			return newData
 		else: 
 			return oldData
 
-def operateBLU():
-	msg = "connect"
-	socket.send(msg)
+def operateBLU(data):
+	socket.send(data+" ")
 
 
 def checkState():
@@ -93,22 +82,24 @@ def checkState():
 
 	state = db.child("state").get().val() # state변수가 바뀌었을때 일괄적으로 component 전체 확인
 	if bool(state) == True:
-		oldLight1 = checkState("light", "light1", oldLight1)
-		oldLight2 = checkState("light","light2", oldLight2)
-		oldLight3 = checkState("light","light3", oldLight3)
-		oldDTemp = checkState("Airconditioner","dTemp", oldDTemp)
-		oldAirPower = checkState("Airconditioner","power", oldAirPower)
+		oldLight1 = checkComponentState("light", "light1", oldLight1)
+		oldLight2 = checkComponentState("light","light2", oldLight2)
+		oldLight3 = checkComponentState("light","light3", oldLight3)
+		oldDTemp = checkComponentState("Airconditioner","dTemp", oldDTemp)
+		oldAirPower = checkComponentState("Airconditioner","power", oldAirPower)
 		db.child("state").set(False)
 
+# 현재 개발자 개정이 없어 인증키가 없어 APNS를 이용하지 못해 보류
 def checkGas():
-	data = socket.recv(1024)
-	data = data[1:4]
-	print(type(data)) #bytes 타입
-	if (data == bytes(d)):
-		print("change")
+	global oldGas
+
+	data = socket.recv(128)
+	print(data)
+	data = int.from_bytes(data,"big") #bytes -> int (big-endian)
+	if (data == 0x81 and oldGas == "false"): #0x81 = detect
 		db.child("Sensor").child("Gas").set(True)
 		oldGas = "true"
-	elif(data == "n"):
+	elif(data == 0x80):			 #0x80 = undetect
 		db.child("Sensor").child("Gas").set(False)
 		oldGas = "false"
 
@@ -118,6 +109,5 @@ initState()
 while True:
 	checkState()
 	time.sleep(0.1)
-	checkGas()
 
 socket.close
