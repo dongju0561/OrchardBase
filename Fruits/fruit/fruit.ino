@@ -1,11 +1,9 @@
 #include <SoftwareSerial.h>
+#include <stdio.h>
 //#include <Servo.h>
-
-#define sensorPin A0
 
 SoftwareSerial bluetooth(2,3);
 
-int smokeLevel;
 
 void setup(){
   Serial.begin(9600);
@@ -15,7 +13,8 @@ void setup(){
 
 void loop(){
   if(bluetooth.available()){
-  Serial.write(bluetooth.read());
+    Serial.write((int)bluetooth.read());
+    Serial.println(sizeof(data));
   }
 }
 //bluetooth MAC addr: 98:da:60:03:82:04

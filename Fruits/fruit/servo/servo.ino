@@ -30,20 +30,3 @@ void loop()
   }
   servo.write(angle);
 }
-  // for(int i=0; i<90; i++){
-  //   servo.write(i);
-  //   delay(delay_);
-  // }
-  // for(int i=90; i>0; i--){
-  //   servo.write(i);
-  //   delay(delay_);
-  // }
-
-  // servo.write(0);
-  // delay(20);
-  // servo.write(180);
-  // delay(20);
-  // servo2.write(0);
-  // servo2.write(350);
-  
-
