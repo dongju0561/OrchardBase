@@ -47,6 +47,7 @@ def checkComponentState(control, component, oldData):
 	newData = db.child(control).child(component).get().val()
 	if control == "light":
 		if newData != oldData:
+			operateBLU(newData)
 			print(component+" is changed!")
 			return newData
 		else: 						# 위에 조건을 만족 못하고 따로 return을 안시켜주면 None값을 return함...
@@ -54,7 +55,6 @@ def checkComponentState(control, component, oldData):
 	elif control == "Airconditioner" and component == "dTemp":
 		if newData != oldData:
 			temp = (db.child(control).child(component).get().val())
-			operateBLU(temp)
 			print(" send! ")	
 			return newData
 		else:
@@ -67,9 +67,14 @@ def checkComponentState(control, component, oldData):
 		else: 
 			return oldData
 
-def operateBLU(data):
-	socket.send(data+" ")
-
+def operateBLU(new):
+	print(new)
+	if(new == True):
+		socket.send('y')
+		print("send on")
+	elif(new == False):
+		socket.send('n')
+		print("send off")
 
 def checkState():
 	global oldLight1	
