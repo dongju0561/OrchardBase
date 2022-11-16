@@ -42,20 +42,21 @@ def initState(): #edit: initState
 	oldAirPower = db.child("Airconditioner").child("power").get().val()
 	oldDTemp = db.child("Airconditioner").child("dTemp").get().val()
 
-# 전등 상태 변화 확인 함수
+# component 상태 변화 확인 함수
 def checkComponentState(control, component, oldData):
 	newData = db.child(control).child(component).get().val()
 	if control == "light":
-		if newData != oldData:
-			operateBLU(newData)
+		if newData != oldData: #데이터 상태가 변화했다면
+			operateBLU(control, newData)
 			print(component+" is changed!")
 			return newData
 		else: 						# 위에 조건을 만족 못하고 따로 return을 안시켜주면 None값을 return함...
 			return oldData 				# 위의 조건을 만족 못할 시
 	elif control == "Airconditioner" and component == "dTemp":
 		if newData != oldData:
-			temp = (db.child(control).child(component).get().val())
-			print(" send! ")	
+			print(component+" is changed!")
+			temp = (db.child(control).child(component).get().val()) #희망온도 읽어오기
+			operateBLU(control, temp) #블루투스를 통해 값 전달
 			return newData
 		else:
 			return oldData
@@ -63,21 +64,29 @@ def checkComponentState(control, component, oldData):
 	elif control == "Airconditioner" and component == "power":
 		if newData != oldData:
 			print(component+" is changed!")
+			operateBLU(control, newData) #newData가 true인 경우 powerOn 그렇지 않은 경우 powerOff
 			return newData
 		else: 
 			return oldData
 
-def operateBLU(new):
-	print(new)
-	if(new == True):
-		socket.send('y')
-		print("send on")
-	elif(new == False):
-		socket.send('n')
-		print("send off")
+def operateBLU(control, new):
+	if(control == "light")
+		if(new == True):
+			socket.send("y")
+			print("send on")
+		elif(new == False):
+			socket.send('n')
+			print("send off")
+	if(control == "Airconditioner")
+		#temp up
+		#temp down
+		#mode change
+		#wind direction
+		#power on
+		#power off
 
 def checkState():
-	global oldLight1	
+	global oldLight1
 	global oldLight2
 	global oldLight3
 	global oldAirDownTemp
@@ -113,6 +122,6 @@ initState()
 
 while True:
 	checkState()
-	time.sleep(0.1)
+	time.sleep(0.01)
 
 socket.close
