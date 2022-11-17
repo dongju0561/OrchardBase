@@ -5,6 +5,7 @@ SoftwareSerial bluetooth(2,3);
 Servo servo;
 
 int angle = 0;
+char cmd[5] = [];
 
 void setup() 
 {
@@ -16,7 +17,7 @@ void setup()
 void loop() 
 { 
   if(bluetooth.available()){
-    char cmd = (char)bluetooth.read();
+    
     Serial.println(cmd);
     Serial.println(sizeof(cmd));
     if( cmd == 'y'){ //불이 켜져있을때
@@ -29,4 +30,13 @@ void loop()
     }
   }
   servo.write(angle);
+}
+void getCmd(){
+  for (int i = 0; i < 4; i++) {
+    cmd[i] = 
+  }
+}
+
+void parse(){
+
 }

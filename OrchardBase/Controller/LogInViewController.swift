@@ -25,6 +25,8 @@ class LogInViewController: UIViewController {
         self.view.addSubview(toMainButton)
         self.view.addSubview(PWTextFiled)
         let screanSize = UIScreen.main.bounds
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         //let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         
         updateAuth()
@@ -92,7 +94,12 @@ class LogInViewController: UIViewController {
             Password = password ?? ""
         })
     }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
+
+
 
 extension UITextField{
     func addLeftPadding() {

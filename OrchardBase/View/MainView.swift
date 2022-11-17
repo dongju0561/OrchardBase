@@ -195,7 +195,7 @@ struct AirconditionView: View{
                             .frame(width: 100,height: 40, alignment: .trailing)
                             .background(Color.brighGreen)
                             .cornerRadius(15)
-                            .keyboardType(.phonePad)
+                            .keyboardType(.decimalPad)
                         
                         Button {
                             if(16 <=  Int(dTemp)! && Int(dTemp)! <= 32){

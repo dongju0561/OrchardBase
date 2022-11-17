@@ -18,14 +18,13 @@ void loop()
   if(bluetooth.available()){
     char cmd = (char)bluetooth.read();
     Serial.println(cmd);
-    Serial.println(sizeof(cmd));
     if( cmd == 'y'){ //불이 켜져있을때
       angle = 90;
-      Serial.println("get!!");
+      Serial.println("on!!");
     }
     else if(cmd == 'n'){ //불이 꺼져있을때
       angle = 0;
-      Serial.println("get!!");
+      Serial.println("off!!");
     }
   }
   servo.write(angle);
