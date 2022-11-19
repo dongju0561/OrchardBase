@@ -42,8 +42,8 @@ def initState(): #edit: initState
 	oldAirPower = db.child("Airconditioner").child("power").get().val()
 	oldDTemp = db.child("Airconditioner").child("dTemp").get().val()
 
-# component 상태 변화 확인 함수
-def checkComponentState(control, component, oldData):
+# component의 값을 변경 시켜주는 함수
+def changeComponentState(control, component, oldData):
 	newData = db.child(control).child(component).get().val()
 	if control == "light":
 		if newData != oldData: #데이터 상태가 변화했다면
@@ -70,20 +70,21 @@ def checkComponentState(control, component, oldData):
 			return oldData
 
 def operateBLU(control, new):
-	if(control == "light")
+	if(control == "light"):
 		if(new == True):
 			socket.send("y")
 			print("send on")
 		elif(new == False):
 			socket.send('n')
 			print("send off")
-	if(control == "Airconditioner")
+	if(control == "Airconditioner"):
 		#temp up
 		#temp down
 		#mode change
 		#wind direction
 		#power on
 		#power off
+		print("hello")
 
 def checkState():
 	global oldLight1
@@ -96,11 +97,11 @@ def checkState():
 
 	state = db.child("state").get().val() # state변수가 바뀌었을때 일괄적으로 component 전체 확인
 	if bool(state) == True:
-		oldLight1 = checkComponentState("light", "light1", oldLight1)
-		oldLight2 = checkComponentState("light","light2", oldLight2)
-		oldLight3 = checkComponentState("light","light3", oldLight3)
-		oldDTemp = checkComponentState("Airconditioner","dTemp", oldDTemp)
-		oldAirPower = checkComponentState("Airconditioner","power", oldAirPower)
+		oldLight1 = changeComponentState("light", "light1", oldLight1)
+		oldLight2 = changeComponentState("light","light2", oldLight2)
+		oldLight3 = changeComponentState("light","light3", oldLight3)
+		oldDTemp = changeComponentState("Airconditioner","dTemp", oldDTemp)
+		oldAirPower = changeComponentState("Airconditioner","power", oldAirPower)
 		db.child("state").set(False)
 
 # 현재 개발자 개정이 없어 인증키가 없어 APNS를 이용하지 못해 보류
