@@ -2,12 +2,10 @@
 
 ## Overview
 Project “OchardBase” is IoT system which easily controls the lights and the airconditioner in our house with mobile device(iOS)
+<br/>Mobile device and Hub(Raspberry-Pi) shares informations for commands from user on Firebase.
+<br/>Arduino which is connected by various actuators and sensors  and Hub communicate through Bluetooth
 
-Mobile device and Hub(Raspberry-Pi) shares informations for commands from user on Firebase.
-
-Arduino which is connected by various actuators and sensors  and Hub communicate through Bluetooth
-
-(I will add functions which checking indoor carbon dioxide concentration to prevent fire and the amount of laundry .)
+(I will add functions which checking indoor carbon dioxide concentration to prevent fire and the amount of laundry and displaying the results on mobile device)
 ## Schematic
 <p align="center">
  <img src="https://user-images.githubusercontent.com/77201628/193321263-5f5d1bde-1dac-4021-9284-7cd43b84dee4.jpeg" width="400">
