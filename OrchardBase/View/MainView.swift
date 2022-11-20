@@ -131,7 +131,6 @@ struct ControlView: View{
                     .frame(width: 1, height: 100)
                 
             }.onAppear(perform: {
-                print("it workedx")
                 for databaseIndex in 1...3{
                     ref.child("light/light\(databaseIndex)").observeSingleEvent(of: .value, with: { [self] snapshot in
                         let state = snapshot.value as? Bool
@@ -306,7 +305,7 @@ struct AirconditionView: View{
                                 .fontWeight(.heavy)
                         }
                     }
-                }
+                }.ignoresSafeArea(.keyboard)
                 .navigationBarItems(trailing: Button("Done",action: {
                     dismiss()
                 }))
