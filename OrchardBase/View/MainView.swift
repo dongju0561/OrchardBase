@@ -320,7 +320,7 @@ func changeState(){
 
 func changePower(power: Bool) -> Bool {
     let ref = Database.database().reference()
-    ref.child("Airconditioner/power").setValue(!power)
+    ref.child("Airconditioner/powerIsOn").setValue(!power)
     changeState()
     return !power
 }

@@ -1,7 +1,7 @@
 #include <IRremote.hpp>
 #include <IRremote.h>
 
-IRsend irsend;
+IRsend irsend(5);
 
 void setup() {
 
