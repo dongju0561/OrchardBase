@@ -5,6 +5,17 @@
 
 아래에서는 화재를 방지하기 위해 실내 이산화탄소 농도를 검사하고 라이트 스위치를 제어하기 위해 서보 모터를 제어하는 다양한 기능을 찾을 수 있습니다.
 
+## Tech stack
+### iOS 관련
+- UIKit
+- SwiftUI
+- Firebase
+
+### 그 외
+- Raspberry Pi
+- Arduino(Bluetooth, Gas_dectection_modul, Servo_motor, IR_generator)
+- Python3
+
 ## Schematic
 
 <p align="center">
