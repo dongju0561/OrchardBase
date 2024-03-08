@@ -18,9 +18,14 @@
 
 ## Schematic
 
-<p align="center">
- <img src="https://user-images.githubusercontent.com/77201628/193321263-5f5d1bde-1dac-4021-9284-7cd43b84dee4.jpeg" width="400">
-</p>
+<img src="https://user-images.githubusercontent.com/77201628/193321263-5f5d1bde-1dac-4021-9284-7cd43b84dee4.jpeg" width="400"> 
+
+
+![iot-architecture](https://github.com/dongju0561/OrchardBase/assets/77201628/9519f78d-190c-419f-b291-e15b9f3042a0)
+
+이미지 출처: https://iotdunia.com/iot-architecture/
+
+<br>
 
 모바일 디바이스 ➡️ Firebase|
 |-----------------|
