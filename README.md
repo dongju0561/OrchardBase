@@ -5,6 +5,9 @@
 
 아래에서는 화재를 방지하기 위해 실내 가스 농도를 검사하고 라이트 스위치를 제어하기 위해 서보 모터를 제어하는 다양한 기능을 찾을 수 있습니다.
 
+## 개발 노트
+https://likeable-clave-775.notion.site/ffb5be62f26a47ea86f332e640748f6f?pvs=74
+
 ## Tech stack
 ### iOS 관련
 - UIKit
