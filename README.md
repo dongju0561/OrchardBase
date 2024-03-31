@@ -1,4 +1,5 @@
 # OrchardBase🌳🍎🍓🌳
+개발기간: 9월 17일 ~ 11월 6일
 
 ## Overview
 프로젝트 'OrchardBase'는 모바일 기기(iOS)를 사용하여 집 안의 조명 및 에어컨을 제어할 수 있는 IoT 시스템입니다. 모바일 기기와 서버(Raspberry-Pi)는 사용자의 명령을 받아 Firebase에서 해당 정보를 공유합니다. Arduino는 다양한 액추에이터 및 센서에 연결되어 있으며 허브와 Bluetooth를 통해 통신합니다.
